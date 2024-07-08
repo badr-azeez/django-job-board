@@ -1,0 +1,76 @@
+{% load static %} 
+{% include "jobs/haeder.html" %}
+
+<body>
+  <!-- header-start -->
+  <header>
+    <div class="header-area">
+      <div id="sticky-header" class="main-header-area">
+        <div class="container-fluid">
+          <div class="header_bottom_border">
+            <div class="row align-items-center">
+              <div class="col-xl-3 col-lg-2">
+                <div class="logo">
+                  <a href="{% url 'home:home' %}">
+                    <img src="{% static 'img/logo.png' %}" alt="" />
+                  </a>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-7">
+                <div class="main-menu d-none d-lg-block">
+                  <nav>
+                    <ul id="navigation">
+                      <li><a href="{% url 'home:home' %}">home</a></li>
+
+                      <li>
+                        <a href="#">Jobs <i class="ti-angle-down"></i></a>
+                        <ul class="submenu">
+                          <li><a href="{% url 'jobs:jobs' %}">Browse Job</a></li>
+                          <li><a href="{% url 'jobs:applied_jobs' %}">Applied Jobs</a></li>
+                          <li><a href="{% url 'jobs:user_jobs' %}">Posted Jobs</a></li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="{% url 'blog:blog_posts' %}">Blog</a>
+                      </li>
+                      <li>
+                        <a href="{% url 'contact_us:send_message' %}">Contact Us</a>
+                      </li>
+                    </ul>
+                  </nav>  
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+                <div class="Appointment">
+                  {% if request.user.is_authenticated %}
+                  <div class="phone_num  d-none d-xl-block">
+                    <a class="text-capitalize" href="{% url 'accounts:profile' %}">{{request.user.first_name}} Profile</a> -
+                    <a class="text-warning" style="cursor: pointer"  onclick=logout.submit() >LOGOUT</a>  
+                    <form id="logout" method="post" class="" action="{% url 'accounts:account_logout' %}">
+                      {% csrf_token %}
+                    </form>
+                  </div>
+                  {% else %}
+                  <div class="phone_num d-none d-xl-block">
+                    <a class="mr-2" href="{% url 'login' %}">Log in</a>
+                    <a href="{% url 'accounts:signup' %}">Signup</a>
+                  </div>
+                  {% endif %}
+
+                  <div class="d-none d-lg-block">
+                    <a class="boxed-btn3" href="{% url 'jobs:add_job' %}">Post a Job</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="mobile_menu d-block d-lg-none"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- header-end -->
+  {% block content %}{% endblock content %} {% include "jobs/footer.html" %}
+</body>

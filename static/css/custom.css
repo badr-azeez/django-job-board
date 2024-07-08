@@ -1,0 +1,36 @@
+/* Style the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #ddd; /* Add a border around the table */
+  }
+  
+  /* Style the table header */
+  thead, tr:first-child {
+    background-color: #4285F4; /* Change header and first row color */
+    color: #fff; /* Change text color to white */
+  }
+  
+  /* Style the table header cells */
+  th {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #ddd; /* Add a bottom border to separate header cells */
+  }
+  
+  /* Style the table rows */
+  tr {
+    border-bottom: 1px solid #ddd; /* Add a bottom border to separate rows */
+  }
+  
+  /* Style the table data cells */
+  td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  /* Style alternate rows */
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Light gray background color for even rows */
+  }
+  

@@ -1,0 +1,38 @@
+{% extends "jobs/base.html" %} {% load static %} 
+{% load crispy_forms_tags %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/user-profile-style.css' %}">
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text">
+                    <h3>
+                        Experience Delete
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+<div class="job_details_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="apply_job_form white-bg">
+                    <h2><span class="text-info" >Are You Sure To Delete Experience </span>{{object}}</h2>
+                    <form method="post">
+                      {% csrf_token %}
+                      {{form|crispy}}
+                        <input class="boxed-btn3 " type="submit" value="Delete">
+                      
+                    </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+    
+{% endblock content%}

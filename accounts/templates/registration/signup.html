@@ -1,0 +1,36 @@
+{% extends "jobs/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="bradcam_area bradcam_bg_1">
+  <div class="container">
+      <div class="row">
+          <div class="col-xl-12">
+              <div class="bradcam_text">
+                  <h3>
+                    Create New Account
+                  </h3>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="job_details_area">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-6 mx-auto">
+              <div class="apply_job_form white-bg">
+                  <form method="post">
+                    {% if form.errors %}
+                      <p>Your username and password didn't match. Please try again.</p>
+                    {% endif %}
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <input class="boxed-btn3 " type="submit" value="login">
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

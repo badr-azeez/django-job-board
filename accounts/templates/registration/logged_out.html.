@@ -1,0 +1,30 @@
+{% extends "jobs/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="bradcam_area bradcam_bg_1">
+  <div class="container">
+      <div class="row">
+          <div class="col-xl-12">
+              <div class="bradcam_text">
+                  <h3>
+                    <p>Logged out!</p>
+                  </h3>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="job_details_area">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-6 mx-auto">
+              <div class="apply_job_form white-bg">
+                <p>Logged out!</p>
+                <a href="{% url 'login'%}">Click here to login again.</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

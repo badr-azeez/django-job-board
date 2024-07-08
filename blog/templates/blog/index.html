@@ -1,0 +1,113 @@
+{% extends "jobs/base.html" %}
+
+{% block content %}
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text">
+                    <h3>
+                        Blog Articles
+                    </h3>
+                    {% if user.is_staff %}
+                        <div>
+                            <a class="boxed-btn3 mt-2" href="{% url 'admin:index' %}blog/blogmodel/add/">Post a Blog</a>
+                        </div>
+                    {% endif %}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <section class="blog_area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-5 mb-lg-0">
+                <div class="blog_left_sidebar">
+                    {% for post in page_obj %}
+                        <article class="blog_item">
+                            <div class="blog_item_img">
+                                <img class="card-img rounded-0" src="{{ post.image.medium.url }}" alt="">
+                                <a href="#" class="blog_item_date">
+                                    <h3>{{post.publish_date|date:"j"}}</h3>
+                                    <p>{{post.publish_date|date:"F"}}</p>
+                                </a>
+                            </div>
+
+                            <div class="blog_details">
+                                <a class="d-inline-block" href="{% url 'blog:post_details' post.slug %}">
+                                    <h2>{{post.title}}</h2>
+                                </a>
+                                <p>{{post.summary_text}}</p>
+                                <ul class="blog-info-link">
+                                      <li class="fa fa-table">
+                                        <a href="{% url 'blog:blog_posts' %}?category={{post.category.name}}">
+                                        {{post.category.name}}
+                                        </a>
+                                      </li>
+                                      <li class="fa fa-comments">
+                                        <a href="{% url 'blog:post_details' post.slug %}#Comments">
+                                            {{post.comments.all| length}} Comments
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                         </article>
+                    {% endfor %}
+                    {% if page_obj %}
+                        <nav class="blog-pagination justify-content-center d-flex">
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a href="?page={{ page_obj.previous_page_number}} {%  if 'category' in request.get_full_path %} &category={{request.GET.category}}{% endif %}" class="page-link" aria-label="Previous">
+                                            <i class="ti-angle-left"></i>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                <li class="page-item disabled">
+                                    <a href="#" class="page-link" aria-label="Previous">
+                                        <i class="ti-angle-left"></i>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% for num in page_obj.paginator.page_range %}
+                                    {% if num == page_obj.number %}
+                                        <li class="page-item active">
+                                            <span class="page-link active" >{{ num }}</span>
+                                        </li>
+                                    {% elif num > page_obj.number|add:"-5"  and num < page_obj.number|add:"5" %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ num }}{%  if 'category' in request.get_full_path %} &category={{request.GET.category}}{% endif %}">{{ num}}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                    
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a href="?page={{ page_obj.next_page_number }}{%  if 'category' in request.get_full_path %} &category={{request.GET.category}}{% endif %}" class="page-link" aria-label="Next">
+                                            <i class="ti-angle-right"></i>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item diabled">
+                                        <a class="page-link " aria-label="Next">
+                                            <i class="ti-angle-right"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                 
+                </div>
+            </div>
+            <div class="col-lg-4">
+                {% include "blog/right-side.html" with search_widget=True post_category_widget=True popular_post_widget=False  tag_cloud_widget=True%}
+            </div>
+        </div>
+    </div>
+</section>
+
+  {% endblock content %}

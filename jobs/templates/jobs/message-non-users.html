@@ -1,0 +1,56 @@
+{% extends "jobs/base.html" %}
+{% load static %}
+{% block content %}
+
+    <!-- header-end -->
+
+    <!-- bradcam_area  -->
+    <div class="bradcam_area bradcam_bg_1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="bradcam_text">
+                        <h3>Applicants</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ bradcam_area  -->
+
+    <div class="job_details_area">
+        <div class="container h-100">
+                <h3 class="text-success" >We Will Callback Soon</h3>
+                <hr>
+                <table class="table table-striped text-black">
+                    <tbody>
+                      <tr>
+                        <th scope="row">Name</th>
+                        <td>{{apply_data.name}}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Email</th>
+                        <td>{{apply_data.email}}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website</th>
+                        <td><a href="{{applicant.website}}">link</a></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">CV file</th>
+                        <td>
+                            <a href="{{apply_data.cv_file.url}}">
+                                <i class="fa fa-file" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Cover Latter</th>
+                        <td>{{apply_data.cover_latter}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+        </div>
+    </div>
+{% endblock content %}

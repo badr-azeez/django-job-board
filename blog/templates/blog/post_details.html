@@ -1,0 +1,208 @@
+{% extends "jobs/base.html" %}
+{% load static %}
+{% load bleach_tags %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text">
+                        <h1 class="text-white w-75">{{post.title}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <section class="blog_area single-post-area section-padding">
+    <div class="container">
+       <div class="row">
+          <div class="col-lg-8 posts-list">
+             <div class="single-post">
+                <div class="feature-img">
+                   <img loading='lazy' class="img-fluid" src="{{post.image.large.url}}" alt="">
+                </div>
+                <div class="blog_details">
+                   <h2>{{post.title}}
+                   </h2>
+                   <ul class="blog-info-link mt-3 mb-4">
+                     <li class="fa fa-tags">
+                        {% with tags_length=post.tags.all|length %}
+                           {% for tag in post.tags.all %}
+                              {% if tags_length > 1 %}
+                                    {% if forloop.first %}
+                                       <a href="{% url 'blog:blog_posts' %}?tag={{tag.name}}">
+                                          <i>{{tag.name}}</i>,
+                                       </a>
+                                    {% elif  forloop.last %}
+                                       <a href="{% url 'blog:blog_posts' %}?tag={{tag.name}}">
+                                          <i>{{tag.name}}</i>
+                                       </a>
+                                    {% else %}
+                                    <a href="{% url 'blog:blog_posts' %}?tag={{tag.name}}">
+                                             <i>{{tag.name}}</i>,
+                                       </a>
+                                    {% endif %}
+                              {% else %}
+                                 <a href="{% url 'blog:blog_posts' %}?tag={{tag.name}}">
+                                    <i>{{tag.name}}</i>
+                                 </a>
+                              {% endif %}
+                           {% endfor %}
+
+                        {% endwith %}
+                      </li>
+                      <li class="fa fa-comments">
+                        <a href="#Comments">
+                            {{post.comments.all| length}} Comments
+                        </a>
+                    </li>
+                   </ul>
+                   <p class="excert">
+                      {{post.full_text | bleach }}
+                   </p>
+                </div>
+             </div>
+             <div class="navigation-top">
+                
+                <div class="navigation-area">
+                   <div class="row">
+                     {% if prev_post %}
+                        <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                            <div class="thumb">
+                            <a href="#">
+                                <img loading='lazy' class="img-fluid"  src="{{prev_post.image.thumbnail.url}}" alt="">
+                            </a>
+                            </div>
+                            <div class="arrow">
+                            <a href="#">
+                                <span class="lnr text-white ti-arrow-left"></span>
+                            </a>
+                            </div>
+                            <div class="detials">
+                            <p>Prev Post</p>
+                            <a href="{% url 'blog:post_details' prev_post.slug  %}">
+                                <h4>{{prev_post.title}}</h4>
+                            </a>
+                            </div>
+                        </div>
+                     {% else %}
+                        <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+
+                        </div>
+                     {% endif %}
+
+                     {% if next_post %}
+                        <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                            <div class="detials">
+                            <p>Next Post</p>
+                            <a href="{% url 'blog:post_details' next_post.slug  %}">
+                                <h4>{{next_post.title}}</h4>
+                            </a>
+                            </div>
+                            <div class="arrow">
+                            <a href="#">
+                                <span class="lnr text-white ti-arrow-right"></span>
+                            </a>
+                            </div>
+                            <div class="thumb">
+                            <a href="#">
+                                <img loading='lazy' class="img-fluid" src="{{next_post.image.thumbnail.url}}" alt="">
+                            </a>
+                            </div>
+                        </div>
+                     {% else %}
+                        <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                        </div>
+                     {% endif %}
+                      
+                   </div>
+                </div>
+             </div>
+             <div class="blog-author">
+                <div class="media align-items-center">
+                   <img loading='lazy' src="{{post.user.profile.image.medium.url}}" alt="">
+                   <div class="media-body">
+                      <a class="text-capitalize" href="#">
+                         <h4 id="Comments">{{post.user.first_name}} {{post.user.last_name}}</h4>
+                      </a>
+                      <p>{{post.user.profile.bio }}</p>
+                   </div>
+                </div>
+             </div>
+             <div  class="comments-area">
+                  {% with comments_count=post.comments.all|length %}
+                     {% if comments_count < 10 and comments_count > 0 %}
+                        <h4>0{{ comments_count }} Comments</h4>
+                     {% elif comments_count >= 10 %}
+                        <h4>{{ comments_count }} Comments</h4>
+                     {% else %}
+                        <h2>Not Have Comment Yet</h2>
+                     {% endif %}
+                  {% endwith %}
+               
+                  {% for comment in post.comments.all %}
+                     <div class="comment-list">
+                        <div class="single-comment justify-content-between d-flex">
+                           <div class="user justify-content-between d-flex">
+                              <div class="thumb">
+                                 <img loading='lazy' src="{{comment.user.profile.image.thumbnail.url}}" alt="">
+                              </div>
+                              <div class="desc">
+                                 <p class="comment">
+                                    {{comment}}
+                                 </p>
+                                 <div class="d-flex justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                       <h5>
+                                          <a class="text-capitalize" href="#">{{comment.user.first_name}} {{comment.user.last_name}}</a>
+                                       </h5>
+                                       <p class="date"> {{comment.created_at|date:"F j, o"}} at {{comment.created_at|date:"P"}}</p>
+                                        {% if request.user == comment.user or request.user.is_staff %}
+                                           <a href="{% url 'blog:comment' comment.slug %}">options</a>
+                                        {% endif %}
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  {% endfor %}
+             </div>
+             {% if user.is_authenticated %}
+                  {% if post.comments_enable == True  %}
+                     <div class="comment-form">
+                        <h4>Leave a Reply</h4>
+                        <form class="pt-3" id="commentForm" method='POST'>
+                        {% csrf_token %}
+                           {{form|crispy}}
+                           <div class="form-group">
+                              <button type="submit" class="button button-contactForm btn_1 boxed-btn">Send Message</button>
+                           </div>
+                        </form>
+                     </div>
+                  {% else %}
+                      <div class="alert alert-warning border border-2 shadow shadow-lg" role="alert">
+                        <h4>Warning!</h4>
+                        Comments Is Disable By Admin
+                      </div>
+                  {% endif %}
+                  
+             {% else %}
+             <div class="alert alert-primary border border-2 shadow shadow-lg" role="alert">
+               Login To Write Comment 
+             </div>
+             {% endif %}
+             
+          </div>
+          <div class="col-lg-4">
+            {% include "blog/right-side.html" with search_widget=True post_category_widget=True popular_post_widget=True tag_cloud_widget=True%}
+
+          </div> 
+       </div>
+    </div>
+ </section>
+ 
+{% endblock content %}

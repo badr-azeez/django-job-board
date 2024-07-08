@@ -1,0 +1,66 @@
+{% load humanize %}
+<div class="blog_right_sidebar">
+
+   {% if search_widget == True  %}
+      <aside class="single_sidebar_widget search_widget">
+         <form action="{% url 'blog:blog_posts' %}" method='GET' autocomplete='Off'>
+            <div class="form-group">
+               <div class="input-group mb-3">
+                  <input type="text" name="search" class="form-control" placeholder="Search Keyword" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
+                  <div class="input-group-append">
+                     <button class="btn" type="button"><i class="ti-search"></i></button>
+                  </div>
+               </div>
+            </div>
+            <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Search</button>
+         </form>
+      </aside>
+   {% endif %}
+
+    {% if post_category_widget == True %}
+         <aside class="single_sidebar_widget post_category_widget">
+               <h4 class="widget_title">Category</h4>
+               <ul class="list cat-list">
+               {% for category_count in category_counts %}
+                  <li>
+                     <a href="{% url 'blog:blog_posts' %}?category={{category_count.category__name}}" class="d-flex text-capitalize">
+                        <p>{{category_count.category__name}} &nbsp;</p>
+                        <p>({{category_count.category__count}})</p>
+                     </a>
+                  </li>
+               {% endfor %}
+               </ul>
+         </aside>
+    {% endif %}
+
+    {% if popular_post_widget == True %}
+      <aside class="single_sidebar_widget popular_post_widget">
+         <h3 class="widget_title">Recent Post</h3>
+         {% for recent_post in recent_posts %}
+            <div class="media post_item">
+               <img loading='lazy' src="{{recent_post.image.thumbnail.url}}" alt="post">
+               <div class="media-body">
+                  <a class="text-capitalize" href="{% url 'blog:post_details' recent_post.slug %}">
+                     <h3>{{recent_post.title|slice:":23"}}...</h3>
+                  </a>
+                  <p>{{ recent_post.publish_date| naturaltime}}</p>
+                  </div>
+            </div>
+         {% endfor %}
+      </aside>
+    {% endif %}
+   
+    {% if tag_cloud_widget == True %}
+      <aside class="single_sidebar_widget tag_cloud_widget">
+         <h4 class="widget_title">Top Tags</h4>
+         <ul class="list">
+            {% for tag in tags %}
+            <li>
+               <a class="text-capitalize"  href="{% url 'blog:blog_posts' %}?tag={{tag.name}}">{{tag.name}}</a>
+            </li>
+            {% endfor %}
+         </ul>
+      </aside>
+    {% endif %}
+    
+ </div>

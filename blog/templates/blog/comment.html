@@ -1,0 +1,41 @@
+{% extends "jobs/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text">
+                    <h3>
+                        Comment Options
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+<div class="job_details_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="apply_job_form white-bg">
+                    <form method="post"">
+                      {% csrf_token %}
+                      {{form|crispy}}
+                      <input class="boxed-btn3" type="submit" value="Edit">
+                      <a class="boxed-btn2 text-white" style="cursor: pointer"  onclick=DELETE.submit() >Delete</a>
+
+                    </form>
+                    
+                    <form id='DELETE' action="{% url 'blog:delete_comment' comment.slug %}" method='POST'>
+                        {% csrf_token %}
+                    </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+{% endblock content %}
