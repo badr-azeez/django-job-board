@@ -144,11 +144,12 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = "/media/"
+MEDIA_URL = "media/"
 
 ########################### ckeditor ###########################
 # CKEditor Settings
-CKEDITOR_UPLOAD_PATH = 'uploads-ckeditor/'
+CKEDITOR_UPLOAD_PATH = MEDIA_URL + 'uploads-ckeditor/'
+print(CKEDITOR_UPLOAD_PATH)
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js' 
